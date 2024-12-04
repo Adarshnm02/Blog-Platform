@@ -1,21 +1,29 @@
-require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 const connectDB = require('./config/database')
+require('dotenv').config();
 
 
 const app = express()
 connectDB();
 
-app.use(cors ({
-    origin: 'http://localhost:3000',
-    credentials: this
+// app.use(cors ({
+//     origin: 'http://localhost:5173',
+//     credentials: true
+// }));
+
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:5174'], 
+    credentials: true
 }));
 
 app.use(helmet());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
+
+app.use('/api/auth', require('./routes/authRoutes'))
+// app.use('/api/posts', require('./routes/postRoutes'))
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -25,12 +33,7 @@ app.use((err, req, res, next) => {
     })
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-});
-
-
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
 })
