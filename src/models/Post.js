@@ -1,36 +1,49 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
-const PostSchema = new mongoose.Schema({
+
+const PostSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required: [true, 'Post title is required'],
-        trim: true,
-        minlength: [3, 'Title must be at least 3 characters long'],
-        maxlength: [100, 'Title cannot exceed 100 characters']
+      type: String,
+      required: true,
+      trim: true,
     },
-    content: {
-        type: String,
-        required: [true, 'Post content is required'],
-        trim: true,
-        minlength: [10, 'Content must be at least 10 characters long']
+    description: {
+      type: String,
+      required: true,
     },
-    image: {
-        type: String, // URL or path to the uploaded image
-        required: false
+    coverImage: {
+      type: String, 
+    },
+    optionalImages: [
+      {
+        type: String, 
+      },
+    ],
+    link: {
+      type: String,
+      validate: {
+        validator: (v) => validator.isURL(v, { protocols: ['http', 'https'], require_protocol: true }),
+        message: (props) => `${props.value} is not a valid URL!`,
+      },
+      required: [true, 'URL is required'],
     },
     author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: false,
     },
     createdAt: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now,
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    }
-});
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('Post', PostSchema);
+const Post = mongoose.model('Post', PostSchema);
+
+module.exports = Post;

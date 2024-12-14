@@ -6,12 +6,11 @@ const jwt = require('jsonwebtoken')
 
 // Register User
 const generateToken = (id, role) => {
-    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '3h' });
 };
 
 exports.register = async (req, res) => {
     try {
-        console.log("from resister backend", req.body)
         const { name, password, email } = req.body;
 
         const existingUser = await User.findOne({ $or: [{ name }, { email }] })
@@ -22,11 +21,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10)
         const newUser = new User({ name, password: hashedPassword, email })
 
-
         await newUser.save();
-        console.log("New Use : ", newUser.email, newUser.name)
-
-        // const { name, email } = newUser;
         const token = generateToken(newUser._id, 'user');
         res.status(200).json({
             success: true,
@@ -39,11 +34,8 @@ exports.register = async (req, res) => {
             }
         });
 
-
-
     } catch (error) {
         console.error("Registration error:", error);
-
         res.status(400).json({ message: error.message })
     }
 };
@@ -55,8 +47,6 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log("Reach at Login ")
-
         const user = await User.findOne({ email })
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
