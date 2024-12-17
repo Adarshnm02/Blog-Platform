@@ -4,7 +4,6 @@ const User = require('../models/User');
 const userAuth = async (req, res, next) => {
     try {
         const token = req.header('Authorization')?.replace('Bearer ', '');
-        console.log('token BT', token)
         if (!token) {
             return res.status(400).json({ message: 'Access denied. No token provided.' });
         }
