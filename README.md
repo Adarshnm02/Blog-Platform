@@ -22,13 +22,13 @@ Its primary goal is to serve as a solid foundation for further expansions such a
    - Create, Read, Update, and Delete blog posts directly from the platform.
 
 2. **Responsive Design**  
-   - Built with **React** and (optionally) **Tailwind CSS** for a modern, mobile-friendly interface.
+   - Built with **React** and **Tailwind CSS** for a modern, mobile-friendly interface.
 
 3. **Dynamic Routing**  
-   - Uses **React Router** (or similar) for navigating between the home page, single post view, and edit post pages.
+   - Uses **React Router** for navigating between the home page, single post view, and edit post pages.
 
 4. **Intuitive Editor**  
-   - Simple text editor for writing and formatting blog posts (consider using Quill, Draft.js, or a custom solution).
+   - Simple text editor for writing and formatting blog posts.
 
 5. **Scalability**  
    - Designed to easily integrate additional features like user authentication, commenting, categories, or search.
@@ -40,12 +40,11 @@ Its primary goal is to serve as a solid foundation for further expansions such a
 | **Technology**     | **Usage**                                   |
 |--------------------|---------------------------------------------|
 | **React**          | Front-end library for building UI           |
-| **Tailwind CSS**   | (Optional) Utility-first CSS framework       |
+| **Tailwind CSS**   | Utility-first CSS framework                 |
 | **React Router**   | Client-side routing for pages/posts         |
-| **Backend**        | Node/Express or Firebase (depending on your setup) |
-| **Package Manager**| npm or yarn for installing dependencies      |
+| **Backend**        | Node/Express                                |
+| **Package Manager**| npm for installing dependencies             |
 
-*(Adjust the table if you’re using a different stack, e.g., Redux, Next.js, or something else.)*
 
 ---
 
